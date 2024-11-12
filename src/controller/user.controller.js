@@ -139,3 +139,40 @@ export const loginUser = async (req, res) => {
       .json({ msg: error.message || error, error: true, success: false });
   }
 };
+
+export const logoutUser = async (req, res) => {
+
+  try {
+
+    const userid = req.userId
+    
+
+    const cookieOption = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    };
+    
+    res.clearCookie('accessToken', cookieOption)
+    res.clearCookie('refreshToken', cookieOption)
+
+    // removeRefreshToken form data base 
+    await UserModel.findByIdAndUpdate(userid , {
+      refresh_token: ""
+    })
+
+    return res.status(201).json({
+      msg: "Logout success",
+      error: false,
+      success: true,
+    });
+
+  } catch (error) {
+    return res
+    .status(500)
+    .json({ msg: error.message || error, error: true, success: false });
+  }
+
+}
+
+
