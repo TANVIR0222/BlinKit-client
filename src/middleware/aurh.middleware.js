@@ -13,7 +13,6 @@ const auth = async (req, res, next) => {
     }
     
     const decode = jwt.verify(token, process.env.SECERET_KEY_ACCESS_TOKEN);
-    console.log(decode);
     
     if(!decode){
         return response.status(401).json({
