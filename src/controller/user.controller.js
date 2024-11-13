@@ -4,6 +4,7 @@ import sendEmail from "../utils/sendEmail.js";
 import verifyEmailTemplate from "../utils/verifyEmailTemplate.js";
 import generateAccessToken from "../utils/generateAccessToken.js";
 import generateRefreshToken from "../utils/generateRefreshToken.js";
+import uploadeImageCloudinary from "../utils/uploadeImageCloudinary.js";
 
 export const register = async (req, res) => {
   try {
@@ -175,4 +176,34 @@ export const logoutUser = async (req, res) => {
 
 }
 
+// 
 
+export const uploadeAvater = async(req,res) =>{
+  try {
+    
+    const userid = req.userId  //auth middleware
+    const image = req.file; //milter middleware
+
+    console.log(userid, image , 'tanvr');
+    
+
+    const upload = await uploadeImageCloudinary(image)
+
+    const updateUser = await UserModel.findByIdAndUpdate(userid, {avatar : upload.url})
+
+    return res.status(201).json({
+      msg: "image uploaded successfully",
+      data:{
+        _id : userid,
+        avatar : upload.url
+      }
+    });
+
+  } catch (error) {
+    console.log(error, 'ok');
+    
+    return res
+    .status(500)
+    .json({ msg: error.message || error, error: true, success: false });
+  }
+}
