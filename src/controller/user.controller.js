@@ -91,7 +91,7 @@ export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email })
 
     if (!user) {
       return res
@@ -118,6 +118,11 @@ export const loginUser = async (req, res) => {
     // generate token user verify
     const accessToken = await generateAccessToken(user._id);
     const refreshToken = await generateRefreshToken(user._id);
+
+    // 
+    const updateUpser = await UserModel.findByIdAndUpdate(user._id,{
+      last_login_date: new Date()
+    });
 
     const cookieOption = {
       httpOnly: true,
@@ -242,7 +247,7 @@ export const updateUseDeatils = async (req, res) => {
 
 export const forgotPassword = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email } = req.body;    
     const user = await UserModel.findOne({ email });
 
     if (!user) throw new Error("Please register first");
@@ -271,7 +276,7 @@ export const forgotPassword = async (req, res) => {
     console.log(error);
     return res
       .status(500)
-      .json({ msg: error.message || error, error: true, success: false });
+      .json({ msg: error.message || error , error: true, success: false });
   }
 };
 
