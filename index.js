@@ -6,13 +6,14 @@ import morgan from "morgan";
 import helmet from "helmet";
 import { connectDB } from "./src/db/connectDB.js";
 import userRoute from "./src/router/user.route.js";
+import categoryRouter from "./src/router/category.route.js";
+import uploadeImageRouter from "./src/router/uploade.route.js";
 
 // middel
 const app = express();
 const port = 8080;
 app.use(
   cors({
-    credentials: true,
     origin: process.env.URL,
   })
 );
@@ -36,9 +37,8 @@ connectDB().then(() =>
   })
 );
 
+//
 
-
-// 
-
-app.use('/api/v1/user/', userRoute)
-
+app.use("/api/v1/user", userRoute);
+app.use("/api/v1/category", categoryRouter);
+app.use("/api/v1/file", uploadeImageRouter);
