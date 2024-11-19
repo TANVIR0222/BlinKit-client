@@ -17,10 +17,10 @@ import uploade from "../middleware/multer.js";
 const userRoute = Router();
 
 userRoute.post("/register", register);
-userRoute.post("/verifyEmail/:id", verifyEmail);
+userRoute.post("/verifyEmail", verifyEmail);
 userRoute.post("/login", loginUser);
-userRoute.get("/logout", auth, logoutUser);
-userRoute.put("/uploade-image", auth, uploade.single("avatar"), uploadeAvater);
+userRoute.post("/logout", logoutUser);
+userRoute.put("/uploade-image/:id", uploade.single("avatar"), uploadeAvater);
 userRoute.put("/uploade-user", auth, updateUseDeatils);
 userRoute.put("/forgot-password", forgotPassword);
 userRoute.put("/verify-forgoot-password-otp", forgotPasswordOtpVerify);
