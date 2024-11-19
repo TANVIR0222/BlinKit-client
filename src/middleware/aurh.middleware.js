@@ -4,7 +4,6 @@ const auth = async (req, res, next) => {
   try {
 
     const token = req.cookies.accessToken || req?.header?.authorization?.split(" ")[1]
-    console.log(token );
 
     if(!token){
         return response.status(401).json({
@@ -23,6 +22,7 @@ const auth = async (req, res, next) => {
     }
 
     req.userId = decode._id
+    console.log(req.userId,'hjhj');
     
     next();
 
