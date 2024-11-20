@@ -35,3 +35,23 @@ export const getAllCategories = async (req, res) => {
       .json({ msg: error.message || error, error: true, success: false });
   }
 };
+
+export const updateCategory = async (req, res) => {
+    try {
+      const {id} = req.params
+      const { name, image } = req.body;      
+
+      const updateCategory = await CategoryModel.findByIdAndUpdate(id, {name, image}, {new: true});
+      res.status(201).json({
+        message: "Category updated successfully",
+        error: false,
+        success: true,
+        updateCategory,
+        });
+
+    } catch (error) {
+      return res
+      .status(500)
+      .json({ msg: error.message || error, error: true, success: false });
+    }
+}
