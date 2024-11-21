@@ -3,7 +3,7 @@ import uploadeImageCloudinary from "../utils/uploadeImageCloudinary.js";
 const uploadeImage = async(req,res) => {
 
     try {
-        const file = req.file;
+        const file = req.file;        
         const uploadImage = await uploadeImageCloudinary(file)
         return res.json({
             message : "Upload done",
