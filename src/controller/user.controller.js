@@ -183,10 +183,13 @@ export const logoutUser = async (req, res) => {
 
 export const uploadeAvater = async (req, res) => {
   try {
-    const userid = req.userId; //auth middleware
+    const userid = req.params.id; //auth middleware
     const image = req.file; //milter middleware
 
-    console.log(userid, image, "tanvr");
+    console.log(userid,image , "tanvir"  , req.file);
+    
+
+    // console.log(userid,'+' , image, "tanvr");
 
     const upload = await uploadeImageCloudinary(image);
 
@@ -196,6 +199,8 @@ export const uploadeAvater = async (req, res) => {
 
     return res.status(201).json({
       msg: "image uploaded successfully",
+      error: false,
+      success: true,
       data: {
         _id: userid,
         avatar: upload.url,
@@ -304,6 +309,12 @@ export const forgotPasswordOtpVerify = async (req, res) => {
         .status(404)
         .json({ msg: "Invalid OTP", error: true, success: false });
     }
+
+    // update otp and expiry date update sb kaj she howyar pr data delete 
+    const updateOtp = await UserModel.findByIdAndUpdate(user?._id , {
+      forgot_password_otp : "",
+      forgot_password_expiry : "",
+    })
 
     return res
       .status(200)

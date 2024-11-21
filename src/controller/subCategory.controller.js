@@ -54,7 +54,7 @@ export const getAllSubCategories = async (req, res) => {
 
 export const deleteSubCategory = async (req, res) => {
   try {
-    const { id } = req.params;    
+    const { id } = req.params;
     if (!id) {
       return res.status(400).json({
         message: "Id not found",
@@ -67,6 +67,41 @@ export const deleteSubCategory = async (req, res) => {
     res.status(201).json({
       message: "Delete Sub Category SuccessFull",
       deleteSubCategory,
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ msg: error.message || error, error: true, success: false });
+  }
+};
+
+export const updateSubCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, image, category } = req.body;
+    if (!name || !image || !category) {
+      return res.status(400).json({
+        message: "Please fill all fields",
+        error: true,
+      });
+    }
+
+    const payloade = {
+      name,
+      image,
+      category,
+    };
+
+    const updateSubCategory = await SubCategoryModel.findByIdAndUpdate(
+      id,
+      payloade,
+      { new: true }
+    );
+    res.status(201).json({
+      message: "update Sub Category SuccessFull",
+      updateSubCategory,
       error: false,
       success: true,
     });
