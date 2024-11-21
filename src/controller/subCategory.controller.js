@@ -41,4 +41,17 @@ export const addSubCategory = async(req,res)=>{
 }
 
 
+export const getAllSubCategories = async (req, res) => {
+    try {
+      const categorys = await SubCategoryModel.find();
+      res.status(201).json({
+        categorys,
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ msg: error.message || error, error: true, success: false });
+    }
+  };
+
   
