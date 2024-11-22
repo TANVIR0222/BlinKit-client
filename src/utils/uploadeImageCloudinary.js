@@ -8,7 +8,6 @@ cloudinary.config({
 });
 
 const uploadeImageCloudinary =async (image) => {
-
     const buffer = image?.buffer || Buffer.from(await image.arrayBuffer())
 
     const uploadeImage = await new Promise((resolve, reject) => {
