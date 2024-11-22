@@ -9,6 +9,7 @@ import userRoute from "./src/router/user.route.js";
 import categoryRouter from "./src/router/category.route.js";
 import uploadeImageRouter from "./src/router/uploade.route.js";
 import subCategoryRoute from "./src/router/subCategory.route.js";
+import productRouter from "./src/router/product.route.js";
 
 // middel
 const app = express();
@@ -44,3 +45,4 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/file", uploadeImageRouter);
 app.use("/api/v1/subcategory" , subCategoryRoute );
+app.use("/api/v1/product" , productRouter );
