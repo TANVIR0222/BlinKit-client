@@ -87,3 +87,27 @@ export const getAllProducts = async (req, res) => {
       .json({ msg: error.message || error, error: true, success: false });
   }
 };
+
+export const  getProductByCategory = async(req,res) => {
+  try {
+    
+    const {id} = req.body;
+    if(!id){
+      return res.status(400).json({ msg: "Category id is required", error: true });
+    }
+
+    const product  = ProductModel.find({category : {$in : id }}).limit(15)
+    res.status(201).json({
+      message: "Product created successfully",
+      error: false,
+      success: true,
+      product,
+    });
+  } catch (error) {
+    console.log(error);
+    
+    return res
+      .status(500)
+      .json({ msg: error.message || error, error: true, success: false });
+  }
+}
