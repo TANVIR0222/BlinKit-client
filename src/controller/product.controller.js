@@ -24,7 +24,7 @@ export const createProduct = async (req, res) => {
       !price ||
       !description
     ) {
-      return response.status(400).json({
+      return res.status(400).json({
         message: "Enter required fields",
         error: true,
         success: false,
@@ -91,18 +91,27 @@ export const getAllProducts = async (req, res) => {
 export const  getProductByCategory = async(req,res) => {
   try {
     
-    const {id} = req.body;
+    const { id } = req.body 
+
     if(!id){
-      return res.status(400).json({ msg: "Category id is required", error: true });
+        return res.status(400).json({
+            message : "provide category id",
+            error : true,
+            success : false
+        })
     }
 
-    const product  = ProductModel.find({category : {$in : id }}).limit(15)
-    res.status(201).json({
-      message: "Product created successfully",
-      error: false,
-      success: true,
-      product,
-    });
+    const product = await ProductModel.find({ 
+        category : { $in : id }
+    }).limit(15)
+
+    return res.json({
+        message : "category product list",
+        data : product,
+        error : false,
+        success : true
+    })
+
   } catch (error) {
     console.log(error);
     

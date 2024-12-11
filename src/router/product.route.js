@@ -5,6 +5,6 @@ const productRouter = Router();
 
 productRouter.post('/add-product' , createProduct)
 productRouter.get('/all-product' , getAllProducts)
-productRouter.get('/get-product-by-category' , getProductByCategory)
+productRouter.post('/get-product-by-category' , getProductByCategory)
 
 export default productRouter;  //exportando o router para ser usado em outro arquivo.  //export
