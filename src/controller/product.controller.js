@@ -144,3 +144,47 @@ export const  getSingleProductById = async(req,res) => {
       .json({ msg: error.message || error, error: true, success: false });
   }
 }
+
+export const updateCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, image } = req.body;
+
+    const updateCategory = await CategoryModel.findByIdAndUpdate(
+      id,
+      { name, image },
+      { new: true }
+    );
+    res.status(201).json({
+      message: "Category updated successfully",
+      error: false,
+      success: true,
+      updateCategory,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ msg: error.message || error, error: true, success: false });
+  }
+};
+
+export const searchProduc = async (req, res) => {
+  try {
+    const {search = '' , page = 1 , limit = 12 } = req.query;
+
+    const product =  await ProductModel.find({name: {$regex : search , $options: 'i'} })
+    .limit(parseInt(limit))
+    .skip((page - 1) * limit )
+    .exec();
+
+    const total = await ProductModel.countDocuments();
+    
+
+    res.status(201).json({product , totalPage: Math.ceil(total / limit) , currentPage: parseInt(page) ,success: true , error:false});
+
+  } catch (error) {
+    res
+      .status(500)
+      .json({ msg: error.message || error, error: true, success: false });
+  }
+}
