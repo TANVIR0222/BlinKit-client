@@ -120,3 +120,27 @@ export const  getProductByCategory = async(req,res) => {
       .json({ msg: error.message || error, error: true, success: false });
   }
 }
+
+export const  getSingleProductById = async(req,res) => {
+  try {
+    const { id } = req.params 
+
+    if(!id){
+        return res.status(400).json({
+            message : "provide category id",
+            error : true,
+            success : false
+        })
+    }
+
+    const product = await ProductModel.findById(id)
+
+    return res.json(product)
+  } catch (error) {
+    console.log(error);
+
+     res
+      .status(500)
+      .json({ msg: error.message || error, error: true, success: false });
+  }
+}
