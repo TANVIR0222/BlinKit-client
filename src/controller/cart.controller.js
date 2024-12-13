@@ -41,3 +41,21 @@ export const addToCartItem = async(req,res) =>{
         .json({ msg: error.message || error, error: true, success: false });
     }
 }
+
+export const getCartItem = async(req,res) =>{
+    try {
+        
+        const {id} =  req.params;
+        const cartItem = await CartProductModel.find({userId:id}).populate('productId')
+
+        res.status(200).json({
+            data: cartItem,
+            message: "cart item get successfull",
+            error: false,
+            success: true,
+        });
+
+    } catch (error) {
+        res.status(500).json({ msg: error.message || error, error: true, success: false }); 
+    }
+}
