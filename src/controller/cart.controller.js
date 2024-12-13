@@ -92,3 +92,39 @@ export const updateCartItemQty = async(req,res)=>{
         })
     }
 }
+
+
+export const deleteCartItemQty = async(req,res)=>{
+    try {
+      const { id  , qty} = req.body 
+      if(! id ||  !qty){
+        return res.status(400).json({
+            message : "provide _id, qty"
+        })
+    }
+      
+      if(!id){
+        return res.status(400).json({
+            message : "Provide _id",
+            error : true,
+            success : false
+        })
+      }
+
+      const deleteCartItem  = await CartProductModel.deleteOne({_id : id })
+
+      return res.json({
+        message : "Item remove",
+        error : false,
+        success : true,
+        data : deleteCartItem
+      })
+
+    } catch (error) {
+        return res.status(500).json({
+            message : error.message || error,
+            error : true,
+            success : false
+        })
+    }
+}
