@@ -10,6 +10,7 @@ import categoryRouter from "./src/router/category.route.js";
 import uploadeImageRouter from "./src/router/uploade.route.js";
 import subCategoryRoute from "./src/router/subCategory.route.js";
 import productRouter from "./src/router/product.route.js";
+import cartRouter from "./src/router/cart.router.js";
 
 // middel
 const app = express();
@@ -46,3 +47,4 @@ app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/file", uploadeImageRouter);
 app.use("/api/v1/subcategory" , subCategoryRoute );
 app.use("/api/v1/product" , productRouter );
+app.use("/api/v1/cart" , cartRouter );
