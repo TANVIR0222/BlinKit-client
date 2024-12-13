@@ -59,3 +59,36 @@ export const getCartItem = async(req,res) =>{
         res.status(500).json({ msg: error.message || error, error: true, success: false }); 
     }
 }
+
+export const updateCartItemQty = async(req,res)=>{
+    try {
+        // const {userId} = req.params;
+        const { id,qty } = req.body
+
+        if(! id ||  !qty){
+            return res.status(400).json({
+                message : "provide _id, qty"
+            })
+        }
+
+        const updateCartitem = await CartProductModel.updateOne({
+            _id : id,
+        },{
+            quantity : qty
+        })
+
+        return res.json({
+            message : "Update cart",
+            success : true,
+            error : false, 
+            data : updateCartitem
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            message : error.message || error,
+            error : true,
+            success : false
+        })
+    }
+}
