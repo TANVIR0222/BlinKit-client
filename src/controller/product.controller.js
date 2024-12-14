@@ -121,6 +121,39 @@ export const  getProductByCategory = async(req,res) => {
   }
 }
 
+export const  getSubcategoryProductByCategory = async(req,res) => {
+  try {
+    
+    const { id } = req.params 
+
+    if(!id){
+        return res.status(400).json({
+            message : "provide category id",
+            error : true,
+            success : false
+        })
+    }
+
+    const product = await ProductModel.find({ 
+        category : { $in : id }
+    }).limit(15)
+
+    return res.json({
+        message : "category product list",
+        data : product,
+        error : false,
+        success : true
+    })
+
+  } catch (error) {
+    console.log(error);
+    
+    return res
+      .status(500)
+      .json({ msg: error.message || error, error: true, success: false });
+  }
+}
+
 export const  getSingleProductById = async(req,res) => {
   try {
     const { id } = req.params 
