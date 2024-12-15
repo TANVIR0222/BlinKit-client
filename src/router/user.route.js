@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   forgotPassword,
   forgotPasswordOtpVerify,
+  getSingleUser,
   loginUser,
   logoutUser,
   refreshToken,
@@ -26,5 +27,6 @@ userRoute.put("/forgot-password", forgotPassword);
 userRoute.put("/verify-forgoot-password-otp", forgotPasswordOtpVerify);
 userRoute.put("/rest-password", resetPassword);
 userRoute.post("/refresh-Token", refreshToken);
+userRoute.get("/single-user-data/:id", getSingleUser);
 
 export default userRoute;

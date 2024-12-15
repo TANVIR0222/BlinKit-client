@@ -122,7 +122,7 @@ export const loginUser = async (req, res) => {
     // 
     const updateUpser = await UserModel.findByIdAndUpdate(user._id,{
       last_login_date: new Date()
-    });
+    })
 
     const cookieOption = {
       httpOnly: true,
@@ -136,7 +136,9 @@ export const loginUser = async (req, res) => {
       msg: "Login success",
       error: false,
       success: true,
-      user,
+      user: {
+        _id: user._id,
+      },
       data: {
         accessToken,
         refreshToken,
@@ -429,3 +431,26 @@ export const refreshToken = async (req, res) => {
       .json({ msg: error.message || error, error: true, success: false });
   }
 };
+
+
+export const  getSingleUser = async(req,res) => {
+  try {
+    const { id } = req.params ;
+
+    if(!id){
+      res.status(400).json({
+        message : "provide category id",
+        error : true,
+        success : false
+      })
+    }
+
+    const user = await UserModel.findById(id)
+
+    return res.status(201).json(user);
+  } catch (error) {
+     res
+      .status(500)
+      .json({ msg: error.message || error, error: true, success: false });
+  }
+}
