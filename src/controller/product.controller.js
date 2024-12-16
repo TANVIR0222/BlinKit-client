@@ -221,3 +221,39 @@ export const searchProduc = async (req, res) => {
       .json({ msg: error.message || error, error: true, success: false });
   }
 }
+
+
+export const updateProductDeatils = async (req, res) => {
+  try {
+    const {id} = req.params;
+    
+    const {name,image,category,subCategory, unit,stock,price,discount,description,more_details,} = req.body;
+
+    const updateUser = await ProductModel.findByIdAndUpdate(
+      { _id: id },
+      {
+        ...(name && { name: name }),
+        ...(image && { image: image }),
+        ...(unit && { unit: unit }),
+        ...(stock && { stock: stock }),
+        ...(price && { price: price }),
+        ...(category && { category: category }),
+        ...(discount && { discount: discount }),
+        ...(description && { description: description }),
+        ...(more_details && { more_details: more_details }),
+      }
+    );
+
+    return res.status(201).json({
+      msg: "Update user successfully",
+      data: updateUser,
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ msg: error.message || error, error: true, success: false });
+  }
+};
+
