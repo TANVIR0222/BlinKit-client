@@ -22,7 +22,7 @@ userRoute.post("/verifyEmail", verifyEmail);
 userRoute.post("/login", loginUser);
 userRoute.post("/logout", logoutUser);
 userRoute.put("/uploade-image/:id", uploade.single("avatar"), uploadeAvater);
-userRoute.put("/uploade-user", auth, updateUseDeatils);
+userRoute.put("/update-user/:id", updateUseDeatils);
 userRoute.put("/forgot-password", forgotPassword);
 userRoute.put("/verify-forgoot-password-otp", forgotPasswordOtpVerify);
 userRoute.put("/rest-password", resetPassword);

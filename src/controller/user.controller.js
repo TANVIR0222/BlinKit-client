@@ -220,7 +220,8 @@ export const uploadeAvater = async (req, res) => {
 //
 export const updateUseDeatils = async (req, res) => {
   try {
-    const userId = req.userId;
+    const {id} = req.params;
+    
     const { name, email, password, number } = req.body;
 
     let hashPass = "";
@@ -230,7 +231,7 @@ export const updateUseDeatils = async (req, res) => {
     }
 
     const updateUser = await UserModel.updateOne(
-      { _id: userId },
+      { _id: id },
       {
         ...(name && { name: name }),
         ...(email && { email: email }),
