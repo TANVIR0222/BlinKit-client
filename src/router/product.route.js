@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { createProduct, getAllProducts, getProductByCategory, getSingleProductById, searchProduc , getSubcategoryProductByCategory, updateProductDeatils } from '../controller/product.controller.js';
+import { createProduct, getAllProducts, getProductByCategory, getSingleProductById, searchProduc , getSubcategoryProductByCategory, updateProductDeatils, deleteProduct } from '../controller/product.controller.js';
 
 const productRouter = Router();
 
@@ -10,5 +10,6 @@ productRouter.get('/get-sub-category-product-by-category/:id' , getSubcategoryPr
 productRouter.get('/get-single-product-by-id/:id' , getSingleProductById)
 productRouter.get('/search-product' , searchProduc)
 productRouter.put('/update-product-deatils/:id' , updateProductDeatils)
+productRouter.delete('/delete-product/:id' , deleteProduct)
 
 export default productRouter;  //exportando o router para ser usado em outro arquivo.  //export
