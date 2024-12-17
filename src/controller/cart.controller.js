@@ -132,3 +132,57 @@ export const deleteCartItemQty = async(req,res)=>{
         })
     }
 }
+
+// delete cart item
+export const deleteCart = async (req, res) => {
+    try {
+      const { id } = req.params; // User ID
+      const { productId } = req.body; // Product to be removed from the cart
+  
+      if (!id) {
+        return res.status(400).json({
+          message: "User ID is required",
+          error: true,
+          success: false,
+        });
+      }
+  
+      if (!productId) {
+        return res.status(400).json({
+          message: "Product ID is required",
+          error: true,
+          success: false,
+        });
+      }
+      const deleteProduct = await CartProductModel.deleteOne({productId});
+  
+      // Update user's shopping cart: Remove the specific product
+      const updateCart = await UserModel.updateOne(
+        { _id: id },
+        { $pull: { shopping_cart: productId } } // Use $pull to remove a specific product
+      );
+  
+      if (updateCart.modifiedCount === 0) {
+        return res.status(404).json({
+          message: "Product or User not found in the cart",
+          error: true,
+          success: false,
+        });
+      }
+  
+      res.status(200).json({
+        message: "Product removed from cart successfully",
+        error: false,
+        success: true,
+        updateCart,
+        deleteProduct,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: error.message || "Server error",
+        error: true,
+        success: false,
+      });
+    }
+  };
+  
