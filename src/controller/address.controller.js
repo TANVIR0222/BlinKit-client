@@ -58,3 +58,32 @@ export const getAddressSingleUser = async(req,res) =>{
         res.status(500).json({ msg: error.message || error, error: true, success: false }); 
     }
 }
+
+export const updateAddrress = async(req,res) => {
+
+    try {
+        const {id} = req.params;        
+        const {addressline,city,state,pincode,country,mobile} = req.body;
+              
+        const updateAddress = await AddressModel.updateOne({_id : id},{
+            address_line: addressline,
+            city,
+            state,
+            pincode,
+            country,
+            mobile,
+        })
+
+        return res.status(201).json({
+            msg: "Address Create Success",
+            error: false,
+            success: true,
+            data: updateAddress,
+        });
+
+    } catch (error) {
+        res
+        .status(500)
+        .json({ msg: error.message || error, error: true, success: false });
+    }
+}
