@@ -41,3 +41,20 @@ export const addAddrress = async(req,res) => {
     }
 }
 
+export const getAddressSingleUser = async(req,res) =>{
+    try {
+        
+        const {id} =  req.params;
+        const userAddress = await AddressModel.find({userId:id}).sort({createdAt : -1});
+
+        res.status(200).json({
+            data: userAddress,
+            message: "cart item get successfull",
+            error: false,
+            success: true,
+        });
+
+    } catch (error) {
+        res.status(500).json({ msg: error.message || error, error: true, success: false }); 
+    }
+}
