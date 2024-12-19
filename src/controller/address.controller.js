@@ -87,3 +87,28 @@ export const updateAddrress = async(req,res) => {
         .json({ msg: error.message || error, error: true, success: false });
     }
 }
+
+export const deleteAddress = async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(400).json({
+          message: "Id not found",
+          error: true,
+          success: false,
+        });
+      }
+  
+      const addressDelete = await AddressModel.findByIdAndDelete(id);
+      res.status(201).json({
+        message: "Delete Address SuccessFull",
+        data: addressDelete,
+        error: false,
+        success: true,
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ msg: error.message || error, error: true, success: false });
+    }
+  };
