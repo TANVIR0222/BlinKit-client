@@ -12,6 +12,7 @@ import subCategoryRoute from "./src/router/subCategory.route.js";
 import productRouter from "./src/router/product.route.js";
 import cartRouter from "./src/router/cart.router.js";
 import addressRouter from "./src/router/address.router.js";
+import orderRouter from "./src/router/order.route.js";
 
 // middel
 const app = express();
@@ -50,3 +51,4 @@ app.use("/api/v1/subcategory" , subCategoryRoute );
 app.use("/api/v1/product" , productRouter );
 app.use("/api/v1/cart" , cartRouter );
 app.use("/api/v1/address" , addressRouter );
+app.use("/api/v1/order" , orderRouter );
